@@ -6,6 +6,7 @@
 
 #Unreal Engine Starter Content
 Content/StarterContent/*
+Content/NecrosUtilityMatPack/*
 
 # Compiled Object files
 *.slo

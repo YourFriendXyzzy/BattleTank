@@ -18,9 +18,13 @@ void ATankAIController::BeginPlay() {
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AI Controller foundplayer: %s"), *(PlayerTank->GetName()));
-	}
+	}	
+}
 
-	
+void ATankAIController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+	AimTowardPlayer();
+
 }
 
 ATank* ATankAIController::GetControlledTank() const {
@@ -32,4 +36,10 @@ ATank* ATankAIController::GetPlayerTank() const {
 
 	if (!PlayerPawn) {return nullptr;}
 	else { return Cast<ATank>(PlayerPawn);}
+}
+
+void ATankAIController::AimTowardPlayer() {
+	if (!GetControlledTank() || !GetPlayerTank()) { return; }
+	FVector PlayerPosition = GetPlayerTank()->GetTargetLocation();
+	GetControlledTank()->AimAt(PlayerPosition);
 }

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
@@ -13,6 +14,9 @@ class BATTLETANKX_API ATank : public APawn
 
 public:
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
 
 private:
@@ -28,6 +32,9 @@ private:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	//called when you aim
+	UTankAimingComponent* TankAimingComponent = nullptr;
 
 
 };

@@ -3,6 +3,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -34,6 +35,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	)) {
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
+		MoveTurretTowards(AimDirection);
 		auto Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution Found"), Time);
 	}
@@ -44,7 +46,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
+	if (!TurretToSet) { return; }
+	Turret = TurretToSet;
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
@@ -58,4 +66,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	//move baral to the right amount this frame
 	//givn max elivation speed and the frame time
 	Barrel->Elevate(DeltaRotator.Pitch); //TODO remove magic number
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
+	//figure out dif between current barral rotation and aim direction
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	auto AimAsTurretRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsTurretRotator - TurretRotator;
+	//UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s "), *AimAsBarrelRotator.ToString());
+
+
+	//move baral to the right amount this frame
+	//givn max elivation speed and the frame time
+	Turret->Rotate(DeltaRotator.Yaw); //TODO remove magic number
 }

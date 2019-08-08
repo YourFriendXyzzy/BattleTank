@@ -44,6 +44,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	float ReloadTimeInSeconds = 3;
+
+	double LastFireTime = 0;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

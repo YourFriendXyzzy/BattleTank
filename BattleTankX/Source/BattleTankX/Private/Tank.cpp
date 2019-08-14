@@ -56,6 +56,9 @@ void ATank::Fire() {
 	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, SpawnLoc, SpawnRot);
 
 	//Launch the projectile
+
+
+	
 	Projectile->LaunchProjectile(LaunchSpeed);
 
 	LastFireTime = FPlatformTime::Seconds();

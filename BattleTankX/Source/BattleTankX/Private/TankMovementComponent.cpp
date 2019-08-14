@@ -16,8 +16,19 @@ void UTankMovementComponent::IntendMoveForward(float Throw) {
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw) {
-	UE_LOG(LogTemp, Warning, TEXT("Turning at %f"), Throw);
 	if (!LeftTrack || !RightTrack) { return; }
 	LeftTrack->SetThrottle(-Throw);
 	RightTrack->SetThrottle(Throw);
+}
+
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) {
+	//no need to call super as funcionality is replaced
+	auto TankName = GetOwner()->GetName();
+	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+	float ForwardThrow = FVector::DotProduct(AIForwardIntention, TankForward);
+	auto TurnThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
+	
+	IntendMoveForward(ForwardThrow);
+	IntendTurnRight(TurnThrow);
 }

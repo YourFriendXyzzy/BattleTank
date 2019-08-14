@@ -20,16 +20,14 @@ void ATankAIController::Tick(float DeltaTime) {
 	//Get Player Tank
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-
-
-	
 	if (PlayerTank) {
-		//TODO move towards player
+		//Tmove towards player
+		MoveToActor(PlayerTank, AcceptanceRadius);
 
 		// Aim at player
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 		//Fire if ready
-		ControlledTank->Fire(); //Limit Firing rate
+		//ControlledTank->Fire(); //TODO Re enable AI shooting
 
 	}
 }

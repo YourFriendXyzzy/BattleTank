@@ -18,7 +18,7 @@ class BATTLETANKX_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-	ATank* GetControlledTank() const;
+	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	
@@ -36,4 +36,10 @@ private:
 		float CrosshairYLocation = 0.3333;
 	UPROPERTY(EditDefaultsOnly)
 		float LineTraceRange = 1000000;
+
+
+protected:
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		ATank* GetControlledTank() const;
 };

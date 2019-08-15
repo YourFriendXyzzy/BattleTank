@@ -25,8 +25,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
-
-	//TODO check bestprotection
 	
 	
 

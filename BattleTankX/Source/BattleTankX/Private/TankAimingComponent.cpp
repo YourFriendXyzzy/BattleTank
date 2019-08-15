@@ -15,6 +15,10 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::Initializer(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	if (!Barrel) { return; }
@@ -35,33 +39,23 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	)) {
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		MoveTurretTowards(AimDirection);
+		//MoveTurretTowards(AimDirection);
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
-	if (!BarrelToSet) { return; }
-	Barrel = BarrelToSet;
-}
 
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
-	if (!TurretToSet) { return; }
-	Turret = TurretToSet;
-}
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
+	if (!Barrel || !Turret) { return; }
 	//figure out dif between current barral rotation and aim direction
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimAsBarrelRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimAsBarrelRotator - BarrelRotator;
-	//UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s "), *AimAsBarrelRotator.ToString());
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-
-	//move baral to the right amount this frame
-	//givn max elivation speed and the frame time
-	Barrel->Elevate(DeltaRotator.Pitch); //TODO remove magic number
+	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
 }
-
+/*
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
 	//figure out dif between current barral rotation and aim direction
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
@@ -72,5 +66,6 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
 
 	//move baral to the right amount this frame
 	//givn max elivation speed and the frame time
-	Turret->Rotate(DeltaRotator.Yaw); //TODO remove magic number
-}
+	 //TODO remove magic number
+	Turret->Rotate(DeltaRotator.Yaw);
+}*/

@@ -12,7 +12,8 @@ enum class EFiringState : uint8 { Reloading, Aiming, Locked };
 
  //forward declaration 
 class UTankBarrel; // Holds barrel's properties
-class UTankTurret;
+class UTankTurret; // Holds Turret Properties
+class AProjectile; // Holds Projectile Properties
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANKX_API UTankAimingComponent : public UActorComponent
@@ -20,28 +21,51 @@ class BATTLETANKX_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 
-
-
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
+
+
 public:	
+	//allows BP to call fire method
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void Fire();
 	
-	//called when tank aims
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	//called to aim at target
+	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initializer(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+
 
 private:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	//moves the barrel towards the target
+	void MoveBarrelTowards(FVector AimDirection);
+
+	//sets up last fire time for use in reload function
+	double LastFireTime = 0;
+
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
-	void MoveBarrelTowards(FVector AimDirection);
-	//void MoveTurretTowards(FVector AimDirection);
+
+	// Start of Properties #########################################################################################################################
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	// launch speed
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 4000; //starting value of 1000m/s
+
+	//how long it takes to reload
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float ReloadTimeInSeconds = 3;
+
+	// End of Properties #########################################################################################################################
 
 	
 };

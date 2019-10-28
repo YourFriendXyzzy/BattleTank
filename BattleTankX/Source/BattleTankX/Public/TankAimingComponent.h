@@ -49,6 +49,12 @@ private:
 	//sets up last fire time for use in reload function
 	double LastFireTime = 0;
 
+	//tick
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)override;
+
+	//beginplay
+	virtual void BeginPlay()override;
+
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 

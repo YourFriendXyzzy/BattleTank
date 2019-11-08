@@ -38,6 +38,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initializer(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+	bool IsBarrelMoving();
 
 private:	
 	// Sets default values for this component's properties
@@ -49,11 +50,13 @@ private:
 	//sets up last fire time for use in reload function
 	double LastFireTime = 0;
 
+	FVector AimDirection;
+
 	//tick
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)override;
 
 	//beginplay
-	virtual void BeginPlay()override;
+	virtual void BeginPlay() override;
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;

@@ -19,7 +19,7 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::BeginPlay() {
 	Super::BeginPlay();
 	LastFireTime = FPlatformTime::Seconds();
-
+	//test
 	
 }
 
@@ -38,7 +38,6 @@ void UTankAimingComponent::Initializer(UTankBarrel* BarrelToSet, UTankTurret* Tu
 	 }
 	 else {
 		 FiringState = EFiringState::Locked;
-		 UE_LOG(LogTemp, Warning, TEXT("locked"));
 	 }
 
 }

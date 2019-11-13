@@ -25,6 +25,7 @@ protected:
 	virtual void BeginPlay() override;
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

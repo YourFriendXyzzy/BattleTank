@@ -5,6 +5,10 @@
 #include "TankTrack.h"
 
 void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet) {
+	UE_LOG(LogTemp, Warning, TEXT("ENTER TEXT HERE"));
+	//test
+	//test12
+
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }

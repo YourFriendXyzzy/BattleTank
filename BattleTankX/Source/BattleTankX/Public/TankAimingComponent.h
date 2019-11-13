@@ -25,6 +25,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
+	//allow to set in blueprint to counter bug 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Setup")
+		TSubclassOf<AProjectile> ProjectileBlueprint;
 
 
 public:	
@@ -63,8 +66,8 @@ private:
 
 	// Start of Properties #########################################################################################################################
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		TSubclassOf<AProjectile> ProjectileBlueprint;
+	/*UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		TSubclassOf<AProjectile> ProjectileBlueprint;*/
 
 	// launch speed
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
